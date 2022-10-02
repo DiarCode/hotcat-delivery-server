@@ -43,8 +43,8 @@ public class AppUserDetailsManager implements UserDetailsManager {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return appUserRepository.findByUsername(username)
+    public UserDetails loadUserByUsername(String identifier) throws UsernameNotFoundException {
+        return appUserRepository.findByUsernameOrEmail(identifier)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found")) ;
     }
 }

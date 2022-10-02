@@ -9,10 +9,14 @@ import lombok.Data;
 public class UserDTO {
     private Long id;
     private String username;
+    private String name;
+    private String email;
 
     public static UserDTO from(AppUser user) {
         return builder()
                 .id(user.getId())
+                .email(user.getEmail())
+                .name(user.getName())
                 .username(user.getUsername())
                 .build();
     }

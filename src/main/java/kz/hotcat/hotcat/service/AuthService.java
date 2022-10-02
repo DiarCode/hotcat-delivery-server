@@ -30,7 +30,10 @@ public class AuthService {
     private final JwtAuthenticationProvider jwtRefreshTokenAuthProvider;
 
     public ResponseEntity registerNewUser(RegistrationDTO registrationDTO) {
-        AppUser candidate = new AppUser(registrationDTO.getUsername(), registrationDTO.getPassword());
+        AppUser candidate = new AppUser(registrationDTO.getUsername(),
+                        registrationDTO.getEmail(),
+                        registrationDTO.getName(),
+                        registrationDTO.getPassword());
 
         userDetailsManager.createUser(candidate);
         Authentication authentication = UsernamePasswordAuthenticationToken
@@ -42,7 +45,7 @@ public class AuthService {
     public ResponseEntity loginUser(LoginDTO loginDTO) {
         Authentication authentication = daoAuthenticationProvider
                 .authenticate(UsernamePasswordAuthenticationToken
-                        .unauthenticated(loginDTO.getUsername(), loginDTO.getPassword()));
+                        .unauthenticated(loginDTO.getUsernameOrEmail(), loginDTO.getPassword()));
 
         return ResponseEntity.ok(tokenGenerator.createTokens(authentication));
     }
