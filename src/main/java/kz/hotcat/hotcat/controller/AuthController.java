@@ -16,11 +16,6 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
     AuthService authService;
 
-    @GetMapping
-    public String registerNewUser(){
-        return "Hello World";
-    }
-
     @PostMapping("/register")
     public ResponseEntity registerNewUser(@RequestBody RegistrationDTO registrationDTO){
         return authService.registerNewUser(registrationDTO);

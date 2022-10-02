@@ -22,7 +22,6 @@ import static java.util.Collections.EMPTY_LIST;
 @Service
 @AllArgsConstructor
 public class AuthService {
-
     private final UserDetailsManager userDetailsManager;
     private final TokenGenerator tokenGenerator;
     private final DaoAuthenticationProvider daoAuthenticationProvider;

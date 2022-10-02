@@ -30,6 +30,8 @@ import org.springframework.security.oauth2.server.resource.web.BearerTokenAuthen
 import org.springframework.security.oauth2.server.resource.web.access.BearerTokenAccessDeniedHandler;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -45,11 +47,11 @@ public class WebSecurity {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((authorize) -> authorize
-                        .antMatchers("/api/v1/auth/*").permitAll()
+                        .antMatchers("/api/v1/auth/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .csrf().disable()
-                .cors().disable()
+                .cors().and()
                 .httpBasic().disable()
                 .oauth2ResourceServer(oauth -> oauth
                         .jwt(jwt -> jwt.
