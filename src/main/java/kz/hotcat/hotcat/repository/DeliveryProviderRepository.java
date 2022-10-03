@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface DeliveryProviderRepository extends JpaRepository<DeliveryProvider, Long> {
+    boolean existsByName(String name);
 }
