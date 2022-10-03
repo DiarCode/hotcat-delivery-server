@@ -19,8 +19,9 @@ public class Order {
     private Long id;
     @OneToOne
     private Restaurant restaurant;
+
     @OneToMany(mappedBy="order")
-    private List<Food> foodList;
+    private List<OrderItem> orderItemList;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "delivery_provider_id")
