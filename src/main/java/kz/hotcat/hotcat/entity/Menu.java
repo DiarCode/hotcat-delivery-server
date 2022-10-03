@@ -17,6 +17,7 @@ public class Menu {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "menu_id")
     private Long id;
+
     @OneToMany(mappedBy="menu")
     private List<Food> foodList;
 }

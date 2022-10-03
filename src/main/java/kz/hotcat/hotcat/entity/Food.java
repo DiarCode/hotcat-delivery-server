@@ -23,6 +23,7 @@ public class Food {
     private double number;
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "menu_id")
+    @JsonIgnore
     private Menu menu;
 
     @ManyToOne(cascade = CascadeType.ALL)
