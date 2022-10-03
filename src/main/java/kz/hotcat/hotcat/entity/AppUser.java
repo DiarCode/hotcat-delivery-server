@@ -27,6 +27,7 @@ public class AppUser implements UserDetails {
             strategy = GenerationType.SEQUENCE,
             generator = "user_sequence"
     )
+    @Column(name="user_id")
     private Long id;
     @NonNull
     @Column(nullable = false, unique = true)

@@ -6,6 +6,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import java.util.ArrayList;
+
 @Configuration
 public class CorsConfig {
     @Value("${cors.allow-origin}")
@@ -16,7 +18,7 @@ public class CorsConfig {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**").allowedOrigins("http://localhost:3000").allowCredentials(true);
+                registry.addMapping("/**").allowedOrigins("http://localhost:3000", allowOrigin).allowCredentials(true);
             }
         };
     }
