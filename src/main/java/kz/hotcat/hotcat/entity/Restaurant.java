@@ -43,7 +43,7 @@ public class Restaurant {
     @Column(nullable = false)
     private String rating;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "menu_id")
     private Menu menu;
 

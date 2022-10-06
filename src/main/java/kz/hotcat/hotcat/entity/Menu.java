@@ -1,5 +1,6 @@
 package kz.hotcat.hotcat.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -29,8 +30,12 @@ public class Menu {
 
     private String name;
 
-    @OneToMany(mappedBy="menu")
+    @OneToMany(mappedBy="menu", cascade = CascadeType.ALL)
     private List<Food> foodList;
+
+    @OneToOne(mappedBy="menu", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private Restaurant restaurant;
 
     public Menu(String name) {
         this.name = name;

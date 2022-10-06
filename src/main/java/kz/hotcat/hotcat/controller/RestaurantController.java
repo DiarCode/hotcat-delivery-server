@@ -4,6 +4,7 @@ import kz.hotcat.hotcat.entity.Menu;
 import kz.hotcat.hotcat.entity.Restaurant;
 import kz.hotcat.hotcat.service.RestaurantService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
