@@ -14,20 +14,34 @@ import javax.persistence.*;
 @Table(name="foods")
 public class Food {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @SequenceGenerator(
+            name = "food_sequence",
+            sequenceName = "food_sequence",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "food_sequence"
+    )
     @Column(name = "food_id")
     private Long id;
     private String image;
     private String name;
     private String description;
-    private double number;
+    private double price;
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "menu_id")
     @JsonIgnore
     private Menu menu;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "order_id")
-    @JsonIgnore
-    private Order order;
+    public Food(String image, String name, String description, double price) {
+        this.image = image;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+    }
+
+    public void assignFoodToMenu(Menu menu) {
+        this.menu = menu;
+    }
 }

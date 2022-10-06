@@ -16,4 +16,5 @@ public class HotcatApplication {
     PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
 }

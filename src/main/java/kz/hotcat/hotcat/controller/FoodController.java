@@ -1,6 +1,6 @@
 package kz.hotcat.hotcat.controller;
 
-import kz.hotcat.hotcat.entity.DeliveryProvider;
+import kz.hotcat.hotcat.dto.FoodListDTO;
 import kz.hotcat.hotcat.entity.Food;
 import kz.hotcat.hotcat.service.FoodService;
 import lombok.AllArgsConstructor;
@@ -13,7 +13,6 @@ import java.util.List;
 @AllArgsConstructor
 public class FoodController {
     private final FoodService foodService;
-
     @GetMapping
     public List<Food> getAllFoods() {
         return foodService.getAllFoods();
@@ -32,5 +31,21 @@ public class FoodController {
     @DeleteMapping("/{id}")
     public void deleteFoodById(@PathVariable(name = "id") Long foodId) {
         foodService.deleteFoodById(foodId);
+    }
+
+    @PostMapping("/{foodId}/menu/{menuId}")
+    public void assignFoodToMenuById(@PathVariable(name = "menuId") Long menuId,
+                                     @PathVariable(name = "foodId") Long foodId) {
+        foodService.assignFoodToMenuById(menuId, foodId);
+    }
+
+    @PostMapping("/single/menu/{menuId}")
+    public Food createNewFoodForMenuById(@PathVariable(name = "menuId") Long menuId, @RequestBody Food food) {
+        return foodService.createNewFoodForMenuById(menuId, food);
+    }
+
+    @PostMapping("/list/menu/{menuId}")
+    public void createNewFoodsForMenuById(@PathVariable(name = "menuId") Long menuId, @RequestBody FoodListDTO foodListDTO) {
+        foodService.createNewFoodsForMenuById(menuId, foodListDTO);
     }
 }

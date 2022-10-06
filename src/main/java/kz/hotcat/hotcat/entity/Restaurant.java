@@ -43,6 +43,10 @@ public class Restaurant {
     @Column(nullable = false)
     private String rating;
 
+    @OneToOne
+    @JoinColumn(name = "menu_id")
+    private Menu menu;
+
     public Restaurant(String name, boolean hasDelivery, String deliveryTime, String address, String openHours, String shortFoodDescription, String description, String image, String rating) {
         this.name = name;
         this.hasDelivery = hasDelivery;
@@ -53,5 +57,9 @@ public class Restaurant {
         this.description = description;
         this.image = image;
         this.rating = rating;
+    }
+
+    public void assignMenuToRestaurant(Menu menu) {
+        this.menu = menu;
     }
 }

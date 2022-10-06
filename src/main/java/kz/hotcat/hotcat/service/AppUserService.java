@@ -4,7 +4,6 @@ import kz.hotcat.hotcat.dto.UserDTO;
 import kz.hotcat.hotcat.entity.AppUser;
 import kz.hotcat.hotcat.repository.AppUserRepository;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -20,4 +19,5 @@ public class AppUserService {
 
         return ResponseEntity.ok(userDTO);
     }
+
 }

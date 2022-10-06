@@ -14,21 +14,29 @@ import java.util.List;
 @Table(name = "orders")
 public class Order {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @SequenceGenerator(
+            name = "order_sequence",
+            sequenceName = "order_sequence",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "order_sequence"
+    )
     @Column(name = "order_id")
     private Long id;
-    @OneToOne
+
+    @ManyToOne
     private Restaurant restaurant;
 
     @OneToMany(mappedBy="order")
     private List<OrderItem> orderItemList;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "delivery_provider_id")
+    @ManyToOne(cascade = CascadeType.ALL)
     private DeliveryProvider deliveryProvider;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id")
-    private AppUser user;
+    @ManyToOne(cascade = CascadeType.ALL)
+    private AppUser appUser;
+
     private double totalPrice;
 }

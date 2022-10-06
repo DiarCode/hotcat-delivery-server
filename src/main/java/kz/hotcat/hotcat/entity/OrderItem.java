@@ -14,7 +14,15 @@ import javax.persistence.*;
 @Table(name="order_items")
 public class OrderItem {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @SequenceGenerator(
+            name = "order_items_sequence",
+            sequenceName = "order_items_sequence",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "order_items_sequence"
+    )
     @Column(name = "order_item_id")
     private Long id;
 
@@ -29,4 +37,9 @@ public class OrderItem {
     @JoinColumn(name = "order_id")
     @JsonIgnore
     private Order order;
+
+    public void assignOrderItemToOrder(Order order) {
+        this.order = order;
+    }
+
 }
