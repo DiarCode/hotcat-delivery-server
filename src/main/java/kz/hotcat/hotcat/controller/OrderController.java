@@ -35,6 +35,16 @@ public class OrderController {
         return orderService.createNewOrder(orderDTO);
     }
 
+    @PostMapping("/{id}/cooked")
+    public Order changeCookingStatusOfOrderById(@PathVariable(name = "id") Long orderId) {
+        return orderService.changeCookingStatusOfOrderById(orderId);
+    }
+
+    @PostMapping("/{id}/delivered")
+    public Order changeDeliveryStatusOfOrderById(@PathVariable(name = "id") Long orderId) {
+        return orderService.changeDeliveryStatusOfOrderById(orderId);
+    }
+
     @PostMapping("/{id}/fill")
     public Order fillPaymentAndDeliveryDetails(@PathVariable(name = "id") Long orderId,
                                                @RequestBody OrderDetailsDTO orderDetailsDTO){

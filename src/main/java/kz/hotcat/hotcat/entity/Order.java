@@ -47,6 +47,9 @@ public class Order {
 
     private LocalDateTime orderDate;
 
+    private Boolean isCooked;
+    private Boolean isDelivered;
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "delivery_detail_id")
     private DeliveryDetails deliveryDetails;

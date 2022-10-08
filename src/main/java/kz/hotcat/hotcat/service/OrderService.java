@@ -3,7 +3,6 @@ package kz.hotcat.hotcat.service;
 import kz.hotcat.hotcat.dto.OrderDTO;
 import kz.hotcat.hotcat.dto.OrderDetailsDTO;
 import kz.hotcat.hotcat.dto.OrderItemDTO;
-import kz.hotcat.hotcat.dto.PaymentDTO;
 import kz.hotcat.hotcat.entity.*;
 import kz.hotcat.hotcat.repository.AppUserRepository;
 import kz.hotcat.hotcat.repository.OrderRepository;
@@ -47,6 +46,8 @@ public class OrderService {
         order.setDeliveryProvider(deliveryProvider);
         order.setAppUser(user);
         order.setOrderDate(LocalDateTime.now());
+        order.setIsCooked(false);
+        order.setIsDelivered(false);
 
         double totalPrice = 0;
         for (OrderItemDTO orderItemDTO : orderDTO.getOrderItemsList()){
@@ -72,11 +73,11 @@ public class OrderService {
     }
 
     public List<Order> getAllRecentOrders() {
-        return orderRepository.findAllRecenetOrders();
+        return orderRepository.findAllRecentOrders();
     }
 
     public List<Order> getAllRecentOrdersByUserId(Long userId) {
-        return orderRepository.findAllRecenetOrdersByUserId(userId);
+        return orderRepository.findAllRecentOrdersByUserId(userId);
     }
 
     @Transactional
@@ -90,6 +91,32 @@ public class OrderService {
         order.setPayment(payment);
         order.setDeliveryDetails(deliveryDetails);
 
+        return order;
+    }
+
+    @Transactional
+    public Order changeCookingStatusOfOrderById(Long orderId) {
+        Order order = getOrderById(orderId);
+        boolean isOrderCooked = order.getIsCooked();
+
+        if(isOrderCooked) {
+            throw new RuntimeException("Order is already cooked");
+        }
+
+        order.setIsCooked(true);
+        return order;
+    }
+
+    @Transactional
+    public Order changeDeliveryStatusOfOrderById(Long orderId) {
+        Order order = getOrderById(orderId);
+        boolean isOrderDelivered = order.getIsDelivered();
+
+        if(isOrderDelivered) {
+            throw new RuntimeException("Order is already delivered");
+        }
+
+        order.setIsDelivered(true);
         return order;
     }
 }
