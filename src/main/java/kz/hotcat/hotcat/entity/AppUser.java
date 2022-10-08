@@ -1,5 +1,6 @@
 package kz.hotcat.hotcat.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.List;
 
 import static java.util.Collections.EMPTY_LIST;
 @Entity
@@ -42,6 +44,10 @@ public class AppUser implements UserDetails {
     private String name;
     @NonNull
     private String password;
+
+    @OneToMany(mappedBy="user", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Payment> paymentList;
 
     public AppUser(@NonNull String username, @NonNull String email, @NonNull String name, @NonNull String password) {
         this.username = username;

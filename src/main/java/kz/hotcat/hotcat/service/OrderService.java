@@ -1,7 +1,9 @@
 package kz.hotcat.hotcat.service;
 
 import kz.hotcat.hotcat.dto.OrderDTO;
+import kz.hotcat.hotcat.dto.OrderDetailsDTO;
 import kz.hotcat.hotcat.dto.OrderItemDTO;
+import kz.hotcat.hotcat.dto.PaymentDTO;
 import kz.hotcat.hotcat.entity.*;
 import kz.hotcat.hotcat.repository.AppUserRepository;
 import kz.hotcat.hotcat.repository.OrderRepository;
@@ -9,6 +11,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -19,6 +22,8 @@ public class OrderService {
     private final DeliveryProviderService deliveryProviderService;
     private final AppUserRepository appUserRepository;
     private final OrderItemService orderItemService;
+    private final PaymentService paymentService;
+    private final DeliveryDetailsService deliveryDetailsService;
 
     public List<Order> getAllOrders() {
         return orderRepository.findAll();
@@ -41,6 +46,7 @@ public class OrderService {
         order.setRestaurant(restaurant);
         order.setDeliveryProvider(deliveryProvider);
         order.setAppUser(user);
+        order.setOrderDate(LocalDateTime.now());
 
         double totalPrice = 0;
         for (OrderItemDTO orderItemDTO : orderDTO.getOrderItemsList()){
@@ -63,5 +69,27 @@ public class OrderService {
         }
 
         orderRepository.deleteById(orderId);
+    }
+
+    public List<Order> getAllRecentOrders() {
+        return orderRepository.findAllRecenetOrders();
+    }
+
+    public List<Order> getAllRecentOrdersByUserId(Long userId) {
+        return orderRepository.findAllRecenetOrdersByUserId(userId);
+    }
+
+    @Transactional
+    public Order fillPaymentAndDeliveryDetails(Long orderId, OrderDetailsDTO orderDetailsDTO) {
+        Order order = getOrderById(orderId);
+
+        Payment payment = paymentService.createNewPaymentWithOrder(orderDetailsDTO.getPayment(), order);
+        DeliveryDetails deliveryDetails = deliveryDetailsService
+                .createNewDeliveryDetails(orderDetailsDTO.getDeliveryDetails());
+
+        order.setPayment(payment);
+        order.setDeliveryDetails(deliveryDetails);
+
+        return order;
     }
 }

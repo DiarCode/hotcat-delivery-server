@@ -1,6 +1,7 @@
 package kz.hotcat.hotcat.controller;
 
 import kz.hotcat.hotcat.dto.OrderDTO;
+import kz.hotcat.hotcat.dto.OrderDetailsDTO;
 import kz.hotcat.hotcat.entity.Order;
 import kz.hotcat.hotcat.service.OrderService;
 import lombok.AllArgsConstructor;
@@ -19,6 +20,11 @@ public class OrderController {
         return orderService.getAllOrders();
     }
 
+    @GetMapping("/recent")
+    public List<Order> getAllRecentOrders() {
+        return orderService.getAllRecentOrders();
+    }
+
     @GetMapping("/{id}")
     public Order getOrderById(@PathVariable(name = "id") Long orderId) {
         return orderService.getOrderById(orderId);
@@ -29,6 +35,11 @@ public class OrderController {
         return orderService.createNewOrder(orderDTO);
     }
 
+    @PostMapping("/{id}/fill")
+    public Order fillPaymentAndDeliveryDetails(@PathVariable(name = "id") Long orderId,
+                                               @RequestBody OrderDetailsDTO orderDetailsDTO){
+        return orderService.fillPaymentAndDeliveryDetails(orderId, orderDetailsDTO);
+    }
     @DeleteMapping("/{id}")
     public void deleteOrderById(@PathVariable(name = "id") Long orderId) {
         orderService.deleteOrderById(orderId);

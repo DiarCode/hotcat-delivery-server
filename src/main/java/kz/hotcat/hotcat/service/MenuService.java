@@ -1,6 +1,7 @@
 package kz.hotcat.hotcat.service;
 
 import kz.hotcat.hotcat.entity.Menu;
+import kz.hotcat.hotcat.entity.Restaurant;
 import kz.hotcat.hotcat.repository.MenuRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -32,5 +33,10 @@ public class MenuService {
         }
 
         menuRepository.deleteById(menuId);
+    }
+
+    public Restaurant getRestaurantByMenuId(Long menuId) {
+        Menu menu = getMenuById(menuId);
+        return menu.getRestaurant();
     }
 }

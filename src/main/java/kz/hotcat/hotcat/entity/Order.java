@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -38,5 +39,15 @@ public class Order {
     @ManyToOne(cascade = CascadeType.ALL)
     private AppUser appUser;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "payment_id")
+    private Payment payment;
+
     private double totalPrice;
+
+    private LocalDateTime orderDate;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "delivery_detail_id")
+    private DeliveryDetails deliveryDetails;
 }

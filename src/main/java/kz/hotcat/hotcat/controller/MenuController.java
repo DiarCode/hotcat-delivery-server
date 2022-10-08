@@ -1,6 +1,7 @@
 package kz.hotcat.hotcat.controller;
 
 import kz.hotcat.hotcat.entity.Menu;
+import kz.hotcat.hotcat.entity.Restaurant;
 import kz.hotcat.hotcat.service.MenuService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +22,11 @@ public class MenuController {
     @GetMapping("/{id}")
     public Menu getMenuById(@PathVariable(name = "id") Long menuId) {
         return menuService.getMenuById(menuId);
+    }
+
+    @GetMapping("/{id}/restaurant")
+    public Restaurant getRestaurantByMenuId(@PathVariable(name = "id") Long menuId) {
+        return menuService.getRestaurantByMenuId(menuId);
     }
 
     @PostMapping
