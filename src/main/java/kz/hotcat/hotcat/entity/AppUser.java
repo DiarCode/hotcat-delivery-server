@@ -43,6 +43,7 @@ public class AppUser implements UserDetails {
     @Column(nullable = false, unique = false)
     private String name;
     @NonNull
+    @JsonIgnore
     private String password;
 
     @OneToMany(mappedBy="user", cascade = CascadeType.ALL)

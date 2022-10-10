@@ -3,6 +3,7 @@ package kz.hotcat.hotcat.service;
 import kz.hotcat.hotcat.dto.OrderDTO;
 import kz.hotcat.hotcat.dto.OrderDetailsDTO;
 import kz.hotcat.hotcat.dto.OrderItemDTO;
+import kz.hotcat.hotcat.dto.UserOrderStatusDTO;
 import kz.hotcat.hotcat.entity.*;
 import kz.hotcat.hotcat.repository.AppUserRepository;
 import kz.hotcat.hotcat.repository.OrderRepository;
@@ -46,8 +47,6 @@ public class OrderService {
         order.setDeliveryProvider(deliveryProvider);
         order.setAppUser(user);
         order.setOrderDate(LocalDateTime.now());
-        order.setIsCooked(false);
-        order.setIsDelivered(false);
 
         double totalPrice = 0;
         for (OrderItemDTO orderItemDTO : orderDTO.getOrderItemsList()){
@@ -90,6 +89,8 @@ public class OrderService {
 
         order.setPayment(payment);
         order.setDeliveryDetails(deliveryDetails);
+        order.setIsCooked(false);
+        order.setIsDelivered(false);
 
         return order;
     }
@@ -118,5 +119,16 @@ public class OrderService {
 
         order.setIsDelivered(true);
         return order;
+    }
+
+    public UserOrderStatusDTO checkIfOrderIsActiveByUserId(Long userId) {
+        Order order = orderRepository.findLastOrderByUserId(userId)
+                .orElseThrow(() -> new RuntimeException("No latest order"));
+
+        if(order.getIsCooked() && order.getIsDelivered()) {
+            return new UserOrderStatusDTO(order, false);
+        }
+
+        return new UserOrderStatusDTO(order, true);
     }
 }

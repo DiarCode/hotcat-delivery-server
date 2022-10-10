@@ -55,8 +55,6 @@ public class PaymentService {
                 .user(user)
                 .build();
 
-        System.out.println("PAYMANT METHOD ID " + paymentDTO.getPaymentMethodId());
-
         return payment;
     }
 
@@ -77,8 +75,6 @@ public class PaymentService {
                 .build();
 
         paymentMethod.setPayment(payment);
-
-        System.out.println("PAYMANT METHOD ID " + paymentDTO.getPaymentMethodId());
 
         return payment;
     }
