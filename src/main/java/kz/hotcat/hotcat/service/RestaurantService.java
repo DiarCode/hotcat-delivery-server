@@ -7,7 +7,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -65,4 +67,13 @@ public class RestaurantService {
         restaurantCandidate.assignMenuToRestaurant(menu);
     }
 
+    public List<Restaurant> getAllRestaurantsByName(String name) {
+        String trimmedName = name.trim();
+
+        if(trimmedName.isEmpty() || trimmedName.isBlank()) {
+            return new ArrayList<>();
+        }
+
+        return restaurantRepository.findAllByNameContainsIgnoreCase(trimmedName);
+    }
 }

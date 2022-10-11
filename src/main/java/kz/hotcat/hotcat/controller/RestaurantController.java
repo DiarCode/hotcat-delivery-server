@@ -25,6 +25,11 @@ public class RestaurantController {
         return restaurantService.getRestaurantById(restaurantId);
     }
 
+    @GetMapping("/search")
+    public List<Restaurant> getAllRestaurantsByName(@RequestParam String name) {
+        return restaurantService.getAllRestaurantsByName(name);
+    }
+
     @PostMapping
     public Restaurant createNewRestaurant(@RequestBody Restaurant restaurant) {
         return restaurantService.createNewRestaurant(restaurant);
