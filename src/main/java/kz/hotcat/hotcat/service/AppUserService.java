@@ -27,4 +27,8 @@ public class AppUserService {
     public List<Order> getUserOrders(Long userId) {
         return orderService.getAllRecentOrdersByUserId(userId);
     }
+
+    public Long getTotalUsersAmount() {
+        return appUserRepository.getAmountOfUsers();
+    }
 }

@@ -1,22 +1,36 @@
 package kz.hotcat.hotcat.service;
 
+import kz.hotcat.hotcat.dto.RestaurantReportDTO;
 import kz.hotcat.hotcat.entity.Menu;
+import kz.hotcat.hotcat.entity.Order;
 import kz.hotcat.hotcat.entity.Restaurant;
 import kz.hotcat.hotcat.repository.RestaurantRepository;
-import lombok.AllArgsConstructor;
-import org.springframework.http.ResponseEntity;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-@AllArgsConstructor
 public class RestaurantService {
     private final RestaurantRepository restaurantRepository;
     private final MenuService menuService;
+    private final AppUserService appUserService;
+    private final OrderService orderService;
+    private final PaymentService paymentService;
+
+    public RestaurantService(RestaurantRepository restaurantRepository,
+                             @Lazy MenuService menuService,
+                             @Lazy AppUserService appUserService,
+                             @Lazy OrderService orderService,
+                             @Lazy PaymentService paymentService) {
+        this.restaurantRepository = restaurantRepository;
+        this.menuService = menuService;
+        this.appUserService = appUserService;
+        this.orderService = orderService;
+        this.paymentService = paymentService;
+    }
 
     public List<Restaurant> getAllRestaurants() {
         return  restaurantRepository.findAll();
@@ -75,5 +89,19 @@ public class RestaurantService {
         }
 
         return restaurantRepository.findAllByNameContainsIgnoreCase(trimmedName);
+    }
+
+    public RestaurantReportDTO getReportOfAllRestaurants() {
+        Long customersAmount = appUserService.getTotalUsersAmount();
+        double monthlyEarning = orderService.getMonthlyTotalRevenue();
+        Long transactionsAmount = paymentService.getTotalAmountOfTransactionsInPresentMonth();
+        List<Order> lastOrders = orderService.getAllRecentOrders(10);
+
+        return RestaurantReportDTO.builder()
+                .customersAmount(customersAmount)
+                .monthlyEarning(monthlyEarning)
+                .transactionsAmount(transactionsAmount)
+                .lastOrders(lastOrders)
+                .build();
     }
 }

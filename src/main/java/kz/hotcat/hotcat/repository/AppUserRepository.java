@@ -14,4 +14,7 @@ public interface AppUserRepository extends JpaRepository<AppUser, Long> {
     @Query(value = "SELECT * FROM users u WHERE u.email = ?1 OR u.username = ?1", nativeQuery = true)
     Optional<AppUser> findByUsernameOrEmail(String identifier);
     boolean existsByUsername(String username);
+
+    @Query(value = "SELECT COUNT(*) FROM users u", nativeQuery = true)
+    Long getAmountOfUsers();
 }

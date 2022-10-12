@@ -1,6 +1,5 @@
 package kz.hotcat.hotcat.service;
 
-import kz.hotcat.hotcat.dto.OrderDetailsDTO;
 import kz.hotcat.hotcat.dto.PaymentDTO;
 import kz.hotcat.hotcat.entity.*;
 import kz.hotcat.hotcat.repository.AppUserRepository;
@@ -65,8 +64,7 @@ public class PaymentService {
                 .orElseThrow(() -> new RuntimeException("No such user"));
         PaymentMethod paymentMethod = paymentMethodService.getPaymentMethodById(paymentDTO.getPaymentMethodId());
 
-        Payment payment = paymentRepository.save(new Payment());
-        payment = Payment.builder()
+        Payment payment = Payment.builder()
                 .paymentMethod(paymentMethod)
                 .totalPrice(order.getTotalPrice())
                 .timestamp(LocalDateTime.now())
@@ -76,6 +74,11 @@ public class PaymentService {
 
         paymentMethod.setPayment(payment);
 
-        return payment;
+        return paymentRepository.save(payment);
     }
+
+    public Long getTotalAmountOfTransactionsInPresentMonth() {
+        return paymentRepository.getTotalAmountOfTransactionsInPresentMonth();
+    }
+
 }

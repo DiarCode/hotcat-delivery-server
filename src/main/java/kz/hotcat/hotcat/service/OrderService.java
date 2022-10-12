@@ -72,7 +72,11 @@ public class OrderService {
     }
 
     public List<Order> getAllRecentOrders() {
-        return orderRepository.findAllRecentOrders();
+        return orderRepository.findAllRecentActiveOrders();
+    }
+
+    public List<Order> getAllRecentOrders(int limit) {
+        return orderRepository.findAllRecentOrders(limit);
     }
 
     public List<Order> getAllRecentOrdersByUserId(Long userId) {
@@ -130,5 +134,9 @@ public class OrderService {
         }
 
         return new UserOrderStatusDTO(order, true);
+    }
+
+    public double getMonthlyTotalRevenue(){
+        return orderRepository.getMonthlyTotalRevenue();
     }
 }

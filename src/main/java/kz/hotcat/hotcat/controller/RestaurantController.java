@@ -1,10 +1,10 @@
 package kz.hotcat.hotcat.controller;
 
+import kz.hotcat.hotcat.dto.RestaurantReportDTO;
 import kz.hotcat.hotcat.entity.Menu;
 import kz.hotcat.hotcat.entity.Restaurant;
 import kz.hotcat.hotcat.service.RestaurantService;
 import lombok.AllArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -55,5 +55,10 @@ public class RestaurantController {
     public void assignMenuToRestaurantById(@RequestBody Menu menu,
                                            @PathVariable(name = "restaurantId") Long restaurantId) {
         restaurantService.assignMenuToRestaurantById(restaurantId, menu);
+    }
+
+    @GetMapping("/report")
+    public RestaurantReportDTO getReportOfAllRestaurants() {
+        return restaurantService.getReportOfAllRestaurants();
     }
 }
