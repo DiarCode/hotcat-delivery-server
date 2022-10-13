@@ -1,6 +1,7 @@
 package kz.hotcat.hotcat.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import kz.hotcat.hotcat.enums.ROLES_ENUM;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -43,8 +44,13 @@ public class AppUser implements UserDetails {
     @Column(nullable = false, unique = false)
     private String name;
     @NonNull
+    @Column(nullable = false, unique = false)
     @JsonIgnore
     private String password;
+
+    @NonNull
+    @Column(nullable = false, unique = false)
+    private String role = ROLES_ENUM.USER.label;
 
     @OneToMany(mappedBy="user", cascade = CascadeType.ALL)
     @JsonIgnore

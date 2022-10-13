@@ -68,7 +68,6 @@ public class FoodService {
 
     @Transactional
     public void createNewFoodsForMenuById(Long menuId, FoodListDTO foodListDTO) {
-        System.out.println("FOOD LIST " + foodListDTO);
         for (Food food : foodListDTO.getFoodList()){
             Food newFood = createNewFood(food);
             assignFoodToMenuById(menuId, newFood.getId());

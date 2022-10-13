@@ -24,6 +24,6 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     Optional<Order> findLastOrderByUserId(Long userId);
 
     @Query(value = "SELECT SUM(o.total_price) FROM orders o WHERE o.order_date >= date_trunc('month', CURRENT_DATE)", nativeQuery = true)
-    double getMonthlyTotalRevenue();
+    Optional<Double> getMonthlyTotalRevenue();
 
 }

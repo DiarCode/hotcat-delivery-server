@@ -11,6 +11,7 @@ public class UserDTO {
     private String username;
     private String name;
     private String email;
+    private String role;
 
     public static UserDTO from(AppUser user) {
         return builder()
@@ -18,6 +19,7 @@ public class UserDTO {
                 .email(user.getEmail())
                 .name(user.getName())
                 .username(user.getUsername())
+                .role(user.getRole())
                 .build();
     }
 }

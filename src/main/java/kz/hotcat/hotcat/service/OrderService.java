@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -42,7 +43,7 @@ public class OrderService {
         AppUser user = appUserRepository.findById(orderDTO.getUserId())
                 .orElseThrow(() -> new RuntimeException("No such user"));
 
-        Order order = orderRepository.save(new Order());
+        Order order = new Order();
         order.setRestaurant(restaurant);
         order.setDeliveryProvider(deliveryProvider);
         order.setAppUser(user);
@@ -58,7 +59,7 @@ public class OrderService {
 
         order.setTotalPrice(totalPrice + deliveryProvider.getPrice());
 
-        return order;
+        return orderRepository.save(order);
     }
 
     public void deleteOrderById(Long orderId) {
@@ -137,6 +138,7 @@ public class OrderService {
     }
 
     public double getMonthlyTotalRevenue(){
-        return orderRepository.getMonthlyTotalRevenue();
+        Optional<Double> revenue = orderRepository.getMonthlyTotalRevenue();
+        return revenue.orElse(0.0);
     }
 }

@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
@@ -33,6 +35,9 @@ public class OrderItem {
     private int count;
     private double totalPrice;
 
+    @OneToMany(mappedBy="orderItem", cascade = CascadeType.ALL)
+    private List<Topping> toppings = new ArrayList<>();
+
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "order_id")
     @JsonIgnore
@@ -40,6 +45,9 @@ public class OrderItem {
 
     public void assignOrderItemToOrder(Order order) {
         this.order = order;
+    }
+    public void adToppingToOrder(Topping topping) {
+        this.toppings.add(topping);
     }
 
 }

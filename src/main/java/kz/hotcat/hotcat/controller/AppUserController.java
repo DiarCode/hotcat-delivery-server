@@ -4,7 +4,6 @@ import kz.hotcat.hotcat.entity.AppUser;
 import kz.hotcat.hotcat.entity.Order;
 import kz.hotcat.hotcat.service.AppUserService;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -28,5 +27,11 @@ public class AppUserController {
     @PreAuthorize("#user.id == #id")
     public List<Order> getUserOrders(@AuthenticationPrincipal AppUser user, @PathVariable Long id) {
         return appUserService.getUserOrders(id);
+    }
+
+    @GetMapping("/{id}/role")
+    @PreAuthorize("#user.id == #id")
+    public String getUserRole(@AuthenticationPrincipal AppUser user, @PathVariable Long id) {
+        return appUserService.getUserRole(id);
     }
 }

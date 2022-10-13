@@ -31,4 +31,11 @@ public class AppUserService {
     public Long getTotalUsersAmount() {
         return appUserRepository.getAmountOfUsers();
     }
+
+    public String getUserRole(Long userId) {
+        AppUser user = appUserRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        return user.getRole();
+    }
 }

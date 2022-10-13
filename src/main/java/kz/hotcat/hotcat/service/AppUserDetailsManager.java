@@ -17,9 +17,10 @@ public class AppUserDetailsManager implements UserDetailsManager {
 
     @Override
     public void createUser(UserDetails user) {
-        ((AppUser) user).setPassword(passwordEncoder.encode(user.getPassword()));
+        AppUser appUser = (AppUser) user;
+        appUser.setPassword(passwordEncoder.encode(user.getPassword()));
 
-        appUserRepository.save((AppUser) user);
+        appUserRepository.save(appUser);
     }
 
     @Override
