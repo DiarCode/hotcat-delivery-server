@@ -1,1 +1,1 @@
-# Hotcat - delivery service with restaurants, menus and cart.
+## Hotcat - delivery service with restaurants, menus and cart.
