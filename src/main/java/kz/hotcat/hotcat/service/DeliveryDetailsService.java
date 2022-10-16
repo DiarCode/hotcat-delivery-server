@@ -27,12 +27,6 @@ public class DeliveryDetailsService {
     }
 
     public void deleteDeliveryDetailsById(Long deliveryDetailsId) {
-        boolean isDeliveryDetailsExists = deliveryDetailsRepository.existsById(deliveryDetailsId);
-
-        if(!isDeliveryDetailsExists) {
-            throw new RuntimeException("No such delivery details");
-        }
-
         deliveryDetailsRepository.deleteById(deliveryDetailsId);
     }
 }

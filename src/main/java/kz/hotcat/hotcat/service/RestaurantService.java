@@ -58,12 +58,6 @@ public class RestaurantService {
     }
 
     public void deleteRestaurantById(Long restaurantId) {
-        boolean isRestaurantExists = restaurantRepository.existsById(restaurantId);
-
-        if(!isRestaurantExists) {
-            throw new RuntimeException("No such restaurant");
-        }
-
         restaurantRepository.deleteById(restaurantId);
     }
 

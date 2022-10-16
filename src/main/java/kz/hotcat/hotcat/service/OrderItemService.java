@@ -46,12 +46,6 @@ public class OrderItemService {
     }
 
     public void deleteOrderItemById(Long orderItemId) {
-        boolean isExists = orderItemRepository.existsById(orderItemId);
-
-        if(!isExists) {
-            throw new RuntimeException("No such order item");
-        }
-
         orderItemRepository.deleteById(orderItemId);
     }
 }

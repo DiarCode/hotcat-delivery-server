@@ -63,12 +63,6 @@ public class OrderService {
     }
 
     public void deleteOrderById(Long orderId) {
-        boolean isDeliveryProviderExists = orderRepository.existsById(orderId);
-
-        if(!isDeliveryProviderExists) {
-            throw new RuntimeException("No such delivery order");
-        }
-
         orderRepository.deleteById(orderId);
     }
 

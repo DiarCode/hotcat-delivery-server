@@ -30,12 +30,6 @@ public class FoodService {
     }
 
     public void deleteFoodById(Long foodId) {
-        boolean isFoodExists = foodRepository.existsById(foodId);
-
-        if(!isFoodExists) {
-            throw new RuntimeException("No such food");
-        }
-
         foodRepository.deleteById(foodId);
     }
 

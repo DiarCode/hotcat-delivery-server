@@ -33,12 +33,6 @@ public class DeliveryProviderService {
     }
 
     public void deleteDeliveryProviderById(Long deliveryProviderId) {
-        boolean isDeliveryProviderExists = deliveryProviderRepository.existsById(deliveryProviderId);
-
-        if(!isDeliveryProviderExists) {
-            throw new RuntimeException("No such delivery provider");
-        }
-
         deliveryProviderRepository.deleteById(deliveryProviderId);
     }
 }

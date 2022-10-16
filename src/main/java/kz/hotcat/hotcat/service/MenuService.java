@@ -26,12 +26,6 @@ public class MenuService {
     }
 
     public void deleteMenuById(Long menuId) {
-        boolean isMenuExists = menuRepository.existsById(menuId);
-
-        if(!isMenuExists) {
-            throw new RuntimeException("No such food");
-        }
-
         menuRepository.deleteById(menuId);
     }
 

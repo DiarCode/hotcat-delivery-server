@@ -22,12 +22,6 @@ public class PaymentMethodService {
     }
 
     public void deletePaymentMethodById(Long paymentMethodId) {
-        boolean isPaymentMethodExists = paymentMethodRepository.existsById(paymentMethodId);
-
-        if(!isPaymentMethodExists) {
-            throw new RuntimeException("No such payment method");
-        }
-
         paymentMethodRepository.deleteById(paymentMethodId);
     }
 
