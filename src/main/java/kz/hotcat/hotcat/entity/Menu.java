@@ -1,16 +1,18 @@
 package kz.hotcat.hotcat.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
-@Data
+@Getter
+@Setter
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "menus")
@@ -31,6 +33,7 @@ public class Menu {
     private String name;
 
     @OneToMany(mappedBy="menu", cascade = CascadeType.ALL)
+    @ToString.Exclude
     private List<Food> foodList;
 
     @OneToOne(mappedBy="menu", cascade = CascadeType.ALL)
@@ -40,5 +43,18 @@ public class Menu {
     public Menu(String name) {
         this.name = name;
         this.foodList = new ArrayList<>();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Menu menu = (Menu) o;
+        return id != null && Objects.equals(id, menu.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
     }
 }

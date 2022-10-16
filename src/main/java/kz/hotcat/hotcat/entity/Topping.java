@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Entity
@@ -29,9 +31,9 @@ public class Topping {
     private String name;
     private String description;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonIgnore
-    OrderItem orderItem;
+    private List<OrderItem> orderItems = new ArrayList<>();
 
     public Topping(String name, String description) {
         this.name = name;

@@ -1,16 +1,17 @@
 package kz.hotcat.hotcat.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
-@Data
+@Getter
+@Setter
+@ToString
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -53,6 +54,7 @@ public class Restaurant {
 
     @OneToMany(mappedBy="restaurant", cascade = CascadeType.ALL)
     @JsonIgnore
+    @ToString.Exclude
     private List<Payment> paymentList;
 
     public Restaurant(String name, boolean hasDelivery, String deliveryTime, String address, String openHours, String shortFoodDescription, String description, String image, String rating) {
@@ -69,5 +71,18 @@ public class Restaurant {
 
     public void assignMenuToRestaurant(Menu menu) {
         this.menu = menu;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Restaurant that = (Restaurant) o;
+        return id != null && Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
     }
 }

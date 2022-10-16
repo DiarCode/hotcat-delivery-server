@@ -28,4 +28,8 @@ public class ToppingService {
     public void deleteToppingById(Long toppingId) {
         toppingRepository.deleteById(toppingId);
     }
+
+    public void saveAndFlushTopping(Topping topping) {
+        toppingRepository.saveAndFlush(topping);
+    }
 }

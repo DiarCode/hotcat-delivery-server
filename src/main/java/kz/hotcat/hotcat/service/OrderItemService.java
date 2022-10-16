@@ -31,18 +31,21 @@ public class OrderItemService {
     public OrderItem createNewOrderItem(OrderItemDTO orderItemDTO) {
         Food food = foodService.getFoodById(orderItemDTO.getFoodId());
 
-        OrderItem candidate = orderItemRepository.save(new OrderItem());
+        OrderItem candidate = new OrderItem();
         candidate.setCount(orderItemDTO.getCount());
         candidate.setFood(food);
         candidate.setTotalPrice(orderItemDTO.getCount() * food.getPrice());
 
+        OrderItem savedCandidate = orderItemRepository.saveAndFlush(candidate);
+
         for (Long toppingId: orderItemDTO.getToppings()){
             Topping topping = toppingService.getToppingById(toppingId);
-            topping.setOrderItem(candidate);
-            candidate.getToppings().add(topping);
+            topping.getOrderItems().add(savedCandidate);
+
+            toppingService.saveAndFlushTopping(topping);
         }
 
-        return candidate;
+        return savedCandidate;
     }
 
     public void deleteOrderItemById(Long orderItemId) {
