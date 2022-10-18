@@ -87,6 +87,7 @@ public class OrderService {
                 .createNewDeliveryDetails(orderDetailsDTO.getDeliveryDetails());
 
         order.setPayment(payment);
+        order.setDeliveredAt(null);
         order.setDeliveryDetails(deliveryDetails);
         order.setIsCooked(false);
         order.setIsDelivered(false);
@@ -117,6 +118,8 @@ public class OrderService {
         }
 
         order.setIsDelivered(true);
+        order.setDeliveredAt(LocalDateTime.now());
+
         return order;
     }
 

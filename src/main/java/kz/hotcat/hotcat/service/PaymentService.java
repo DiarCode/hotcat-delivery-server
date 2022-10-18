@@ -39,16 +39,15 @@ public class PaymentService {
                 .orElseThrow(() -> new RuntimeException("No such user"));
         PaymentMethod paymentMethod = paymentMethodService.getPaymentMethodById(paymentDTO.getPaymentMethodId());
 
-        Payment payment = paymentRepository.save(new Payment());
-        payment = Payment.builder()
-                .totalPrice(payment.getTotalPrice())
+        Payment payment = Payment.builder()
+                .totalPrice(paymentDTO.getTotalPrice())
                 .timestamp(LocalDateTime.now())
                 .paymentMethod(paymentMethod)
                 .restaurant(restaurant)
                 .user(user)
                 .build();
 
-        return payment;
+        return paymentRepository.save(payment);
     }
 
     @Transactional
