@@ -90,12 +90,14 @@ public class RestaurantService {
         double monthlyEarning = orderService.getMonthlyTotalRevenue();
         Long transactionsAmount = paymentService.getTotalAmountOfTransactionsInPresentMonth();
         List<Order> lastOrders = orderService.getAllRecentOrders(10);
+        int subscribedCustomersAmount = appUserService.getSubscribedUsersAmount();
 
         return RestaurantReportDTO.builder()
                 .customersAmount(customersAmount)
                 .monthlyEarning(monthlyEarning)
                 .transactionsAmount(transactionsAmount)
                 .lastOrders(lastOrders)
+                .subscribedCustomersAmount(subscribedCustomersAmount)
                 .build();
     }
 }

@@ -10,4 +10,5 @@ public class RegistrationDTO {
     private String email;
     private String name;
     private String password;
+    private boolean isSubscribed;
 }

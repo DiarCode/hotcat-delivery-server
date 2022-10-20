@@ -17,4 +17,5 @@ public class RestaurantReportDTO {
     private Long transactionsAmount;
     private double monthlyEarning;
     private List<Order> lastOrders;
+    private int subscribedCustomersAmount;
 }

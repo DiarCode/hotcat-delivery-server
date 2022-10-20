@@ -41,26 +41,35 @@ public class AppUser implements UserDetails {
     private String email;
 
     @NonNull
-    @Column(nullable = false, unique = false)
+    @Column(nullable = false)
     private String name;
     @NonNull
-    @Column(nullable = false, unique = false)
+    @Column(nullable = false)
     @JsonIgnore
     private String password;
 
     @NonNull
-    @Column(nullable = false, unique = false)
+    @Column(nullable = false)
     private String role = ROLES_ENUM.USER.label;
+
+    @NonNull
+    @Column(nullable = false, name = "is_subscribed")
+    private boolean isSubscribed = false;
 
     @OneToMany(mappedBy="user", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Payment> paymentList;
 
-    public AppUser(@NonNull String username, @NonNull String email, @NonNull String name, @NonNull String password) {
+    public AppUser(@NonNull String username,
+                   @NonNull String email,
+                   @NonNull String name,
+                   @NonNull String password,
+                   boolean isSubscribed) {
         this.username = username;
         this.email = email;
         this.name = name;
         this.password = password;
+        this.isSubscribed = isSubscribed;
     }
 
     @Override

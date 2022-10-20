@@ -32,7 +32,8 @@ public class AuthService {
         AppUser candidate = new AppUser(registrationDTO.getUsername(),
                         registrationDTO.getEmail(),
                         registrationDTO.getName(),
-                        registrationDTO.getPassword());
+                        registrationDTO.getPassword(),
+                        registrationDTO.isSubscribed());
 
         userDetailsManager.createUser(candidate);
         Authentication authentication = UsernamePasswordAuthenticationToken
