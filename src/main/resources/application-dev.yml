@@ -10,6 +10,18 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQL10Dialect
     hibernate:
       ddl-auto: update
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: hotcat.service@gmail.com
+    password: wmwghunldfhoymug
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
 
 management:
   endpoint:
@@ -24,6 +36,7 @@ server:
   port: 8080
   error:
     include-message: always
+
 
 
 

@@ -41,16 +41,20 @@ public class AppUser implements UserDetails {
     private String email;
 
     @NonNull
-    @Column(nullable = false, unique = false)
+    @Column(nullable = false)
     private String name;
     @NonNull
-    @Column(nullable = false, unique = false)
+    @Column(nullable = false)
     @JsonIgnore
     private String password;
 
     @NonNull
-    @Column(nullable = false, unique = false)
+    @Column(nullable = false)
     private String role = ROLES_ENUM.USER.label;
+
+    @NonNull
+    @Column(nullable = false, name = "is_subscribed")
+    private boolean isSubscribed = false;
 
     @OneToMany(mappedBy="user", cascade = CascadeType.ALL)
     @JsonIgnore

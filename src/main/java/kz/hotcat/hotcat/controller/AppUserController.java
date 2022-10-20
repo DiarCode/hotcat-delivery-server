@@ -1,5 +1,6 @@
 package kz.hotcat.hotcat.controller;
 
+import kz.hotcat.hotcat.dto.NotificationDTO;
 import kz.hotcat.hotcat.entity.AppUser;
 import kz.hotcat.hotcat.entity.Order;
 import kz.hotcat.hotcat.service.AppUserService;
@@ -33,5 +34,10 @@ public class AppUserController {
     @PreAuthorize("#user.id == #id")
     public String getUserRole(@AuthenticationPrincipal AppUser user, @PathVariable Long id) {
         return appUserService.getUserRole(id);
+    }
+
+    @PostMapping("/notify")
+    public void notifySubscribedUsers(@RequestBody NotificationDTO notificationDTO) {
+        appUserService.notifySubscribedUsers(notificationDTO);
     }
 }
