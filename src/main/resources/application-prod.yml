@@ -33,6 +33,7 @@ cors:
   allow-origin: "https://hotcat.vercel.app"
 
 server:
+  port: ${PORT:8080}
   error:
     include-message: always
 
