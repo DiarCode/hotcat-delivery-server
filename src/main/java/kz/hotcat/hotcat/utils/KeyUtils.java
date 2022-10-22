@@ -23,8 +23,6 @@ import java.util.Arrays;
 import java.util.Objects;
 
 @Component
-@AllArgsConstructor
-@NoArgsConstructor
 public class KeyUtils {
     @Autowired
     Environment environment;
@@ -45,14 +43,14 @@ public class KeyUtils {
     private KeyPair _refreshTokenKeyPair;
 
     private KeyPair getAccessTokenKeyPair() {
-        if(Objects.isNull(_accessTokenKeyPair)) {
+        if (Objects.isNull(_accessTokenKeyPair)) {
             _accessTokenKeyPair = getKeyPair(accessTokenPublicKeyPath, accessTokenPrivateKeyPath);
         }
         return _accessTokenKeyPair;
     }
 
     private KeyPair getRefreshTokenKeyPair() {
-        if(Objects.isNull(_refreshTokenKeyPair)) {
+        if (Objects.isNull(_refreshTokenKeyPair)) {
             _refreshTokenKeyPair = getKeyPair(refreshTokenPublicKeyPath, refreshTokenPrivateKeyPath);
         }
         return _refreshTokenKeyPair;
@@ -82,26 +80,26 @@ public class KeyUtils {
                 throw new RuntimeException(e);
             }
         } else {
-            if(Arrays.asList(environment.getActiveProfiles()).contains("prod")){
+            if (Arrays.asList(environment.getActiveProfiles()).contains("prod")) {
                 throw new RuntimeException("Public and private keys don't exist");
             }
         }
 
         File directory = new File("access-refresh-token-keys");
-        if(!directory.exists()) {
+        if (!directory.exists()) {
             directory.mkdirs();
         }
         try {
             KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
             keyPairGenerator.initialize(2048);
             keyPair = keyPairGenerator.generateKeyPair();
-            try (FileOutputStream fos = new FileOutputStream(publicKeyFile)) {
+            try (FileOutputStream fos = new FileOutputStream(publicKeyPath)) {
                 X509EncodedKeySpec keySpec = new X509EncodedKeySpec(keyPair.getPublic().getEncoded());
                 fos.write(keySpec.getEncoded());
             }
 
-            try (FileOutputStream fos = new FileOutputStream(privateKeyFile)) {
-                X509EncodedKeySpec keySpec = new X509EncodedKeySpec(keyPair.getPrivate().getEncoded());
+            try (FileOutputStream fos = new FileOutputStream(privateKeyPath)) {
+                PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(keyPair.getPrivate().getEncoded());
                 fos.write(keySpec.getEncoded());
             }
         } catch (NoSuchAlgorithmException | IOException e) {
@@ -115,17 +113,13 @@ public class KeyUtils {
     public RSAPublicKey getAccessTokenPublicKey() {
         return (RSAPublicKey) getAccessTokenKeyPair().getPublic();
     }
-
     public RSAPrivateKey getAccessTokenPrivateKey() {
         return (RSAPrivateKey) getAccessTokenKeyPair().getPrivate();
     }
-
     public RSAPublicKey getRefreshTokenPublicKey() {
         return (RSAPublicKey) getRefreshTokenKeyPair().getPublic();
     }
-
     public RSAPrivateKey getRefreshTokenPrivateKey() {
         return (RSAPrivateKey) getRefreshTokenKeyPair().getPrivate();
     }
-
 }
