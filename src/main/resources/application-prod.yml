@@ -1,10 +1,10 @@
 spring:
-  profiles: dev
+  profiles: prod
   datasource:
     driver-class-name: org.postgresql.Driver
-    username: diarbegisbayev
-    url: jdbc:postgresql://localhost:5432/hotcat_db
-    password: Reraha22
+    username: dgfopynwkbewax
+    url: jdbc:postgresql://ec2-54-77-40-202.eu-west-1.compute.amazonaws.com:5432/dcitjum2ku0p1a
+    password: 7670660450661ef15b6c6a2b93c2430ecb471e9475c73812e2a3c0b252134aef
   jpa:
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQL10Dialect
@@ -30,15 +30,11 @@ management:
         include: "*"
 
 cors:
-  allow-origin: "http://localhost:3000"
+  allow-origin: "https://hotcat.vercel.app"
 
 server:
-  port: 8080
   error:
     include-message: always
-
-
-
 
 ACCESS_TOKEN_PRIVATE_KEY_PATH: "access-refresh-token-keys/access-token-private.key"
 ACCESS_TOKEN_PUBLIC_KEY_PATH: "access-refresh-token-keys/access-token-public.key"
