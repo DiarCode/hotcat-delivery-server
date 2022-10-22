@@ -73,7 +73,8 @@ class AuthServiceTest {
         AppUser candidate = new AppUser(registrationDTO.getUsername(),
                 registrationDTO.getEmail(),
                 registrationDTO.getName(),
-                registrationDTO.getPassword());
+                registrationDTO.getPassword(),
+                registrationDTO.isSubscribed());
 
         willDoNothing().given(userDetailsManager).createUser(candidate);
         userDetailsManager.createUser(candidate);

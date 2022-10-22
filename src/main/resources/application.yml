@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: dev
+    active: prod
 
 access-token:
   private: ${ACCESS_TOKEN_PRIVATE_KEY_PATH}
