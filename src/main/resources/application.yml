@@ -2,6 +2,9 @@ spring:
   profiles:
     active: prod
 
+server:
+  port: ${PORT:8080}
+
 access-token:
   private: ${ACCESS_TOKEN_PRIVATE_KEY_PATH}
   public: ${ACCESS_TOKEN_PUBLIC_KEY_PATH}
