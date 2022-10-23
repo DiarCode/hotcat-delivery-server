@@ -92,7 +92,8 @@ public class OrderService {
         order.setIsCooked(false);
         order.setIsDelivered(false);
 
-        return order;
+
+        return orderRepository.save(order);
     }
 
     @Transactional
