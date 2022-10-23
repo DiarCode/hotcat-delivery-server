@@ -44,5 +44,6 @@ public class Payment {
     private Order order;
 
     @OneToOne(mappedBy="payment", cascade = CascadeType.ALL)
+    @JoinColumn(name = "payment_method_id")
     private PaymentMethod paymentMethod;
 }
