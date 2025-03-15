@@ -30,6 +30,7 @@ import org.springframework.security.oauth2.server.resource.web.BearerTokenAuthen
 import org.springframework.security.oauth2.server.resource.web.access.BearerTokenAccessDeniedHandler;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -46,25 +47,26 @@ public class WebSecurity {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .authorizeHttpRequests((authorize) -> authorize
-                        .antMatchers("/api/v1/auth/**", "/api/v1/**").permitAll()
-                        .antMatchers("/api/v1/users/**").authenticated()
-                        .antMatchers("/api/v1/users/notify").permitAll()
-                        .anyRequest().authenticated()
-                )
-                .csrf().disable()
-                .cors().and()
-                .httpBasic().disable()
-                .oauth2ResourceServer(oauth -> oauth
-                        .jwt(jwt -> jwt.
-                                jwtAuthenticationConverter(jwtToUserConverter))
-                )
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .exceptionHandling(exception -> exception
-                        .authenticationEntryPoint(new BearerTokenAuthenticationEntryPoint())
-                        .accessDeniedHandler(new BearerTokenAccessDeniedHandler())
-                );
-
+            .authorizeHttpRequests((authorize) -> authorize
+                .antMatchers("/api/v1/auth/**", "/api/v1/**").permitAll()
+                .antMatchers("/api/v1/users/**").authenticated()
+                .antMatchers("/api/v1/users/notify").permitAll()
+                .anyRequest().authenticated()
+            )
+            .csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+            .and()
+            .cors()
+            .and()
+            .httpBasic().disable()
+            .oauth2ResourceServer(oauth -> oauth
+                .jwt(jwt -> jwt.jwtAuthenticationConverter(jwtToUserConverter))
+            )
+            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
+            .exceptionHandling(exception -> exception
+                .authenticationEntryPoint(new BearerTokenAuthenticationEntryPoint())
+                .accessDeniedHandler(new BearerTokenAccessDeniedHandler())
+            );
+    
         return http.build();
     }
 
